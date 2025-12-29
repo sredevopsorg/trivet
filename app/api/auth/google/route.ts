@@ -32,6 +32,11 @@ export async function GET(request: NextRequest) {
         new URL(`/sign-in/${accountUuid}?error=not-found`, origin)
       );
     }
+    if (!account.adminApiKey || !account.adminHost) {
+      return NextResponse.redirect(
+        new URL(`/sign-in/${accountUuid}?error=not-configured`, origin)
+      );
+    }
 
     clientId = account.googleOauthClientId ?? clientId;
   }

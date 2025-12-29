@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const clientId = account?.googleOauthClientId ?? process.env.GOOGLE_OAUTH_CLIENT_ID;
   const baseUrl = process.env.TRIVET_PUBLIC_BASE_URL ?? origin;
 
-  if (!account || !clientId) {
+  if (!account || !clientId || !account.adminApiKey || !account.adminHost) {
     return new NextResponse("// Trivet account not configured", {
       headers: {
         "Content-Type": "application/javascript; charset=utf-8",
