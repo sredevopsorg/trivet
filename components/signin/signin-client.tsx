@@ -35,6 +35,11 @@ export function SignInClient({
     window.location.assign(url.toString());
   }, [accountUuid, error, redirect]);
 
+  const errorMessage =
+    error === "not-configured"
+      ? "This blog hasn’t finished Trivet setup yet. Try again later."
+      : "Please try again. If this keeps happening, reach out to the blog owner.";
+
   return (
     <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-xl flex-col items-center justify-center px-6 text-center">
       <div className="rounded-3xl border border-gray-100 bg-white/90 p-8 shadow-sm backdrop-blur dark:border-gray-900 dark:bg-gray-950/90">
@@ -44,8 +49,7 @@ export function SignInClient({
               We couldn&apos;t sign you in
             </h1>
             <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-              Please try again. If this keeps happening, reach out to the blog
-              owner.
+              {errorMessage}
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <Button asChild>
