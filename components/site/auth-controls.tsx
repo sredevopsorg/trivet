@@ -64,6 +64,10 @@ export function AuthControls() {
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
+            <Link href="/settings">Settings</Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
             <Link href="/api/auth/logout">Log out</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>

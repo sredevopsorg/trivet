@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { getSessionFromRequest } from "@/lib/auth";
+import { clearSessionCookie, getSessionFromRequest } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
@@ -27,4 +27,24 @@ export async function GET(request: NextRequest) {
     googleMode: account.googleOauthClientId ? "custom" : "trivet",
     hasAdminKey: Boolean(account.adminApiKey)
   });
+}
+
+export async function DELETE(request: NextRequest) {
+  const session = await getSessionFromRequest(request);
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    await prisma.account.delete({ where: { id: session.accountId } });
+    const response = NextResponse.json({ deleted: true });
+    clearSessionCookie(response);
+    return response;
+  } catch (error) {
+    console.error("Account deletion failed", error);
+    return NextResponse.json(
+      { error: "Unable to delete account" },
+      { status: 500 }
+    );
+  }
 }

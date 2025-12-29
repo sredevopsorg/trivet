@@ -10,15 +10,25 @@ export const metadata: Metadata = {
   description: "Give Ghost members Google sign-in without magic links."
 };
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams
+}: {
+  searchParams?: { toast?: string | string[] };
+}) {
   const session = await getSession();
   if (session) {
     redirect("/dashboard");
   }
 
+  const toast =
+    typeof searchParams?.toast === "string" ? searchParams.toast : null;
+
   return (
     <main className="flex min-h-[calc(100vh-4rem)] flex-col justify-between">
-      <HomeHero googleClientId={process.env.GOOGLE_OAUTH_CLIENT_ID ?? ""} />
+      <HomeHero
+        googleClientId={process.env.GOOGLE_OAUTH_CLIENT_ID ?? ""}
+        toast={toast}
+      />
       <Footer />
     </main>
   );

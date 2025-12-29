@@ -15,10 +15,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function HomeHero({ googleClientId }: { googleClientId: string }) {
+export function HomeHero({
+  googleClientId,
+  toast
+}: {
+  googleClientId: string;
+  toast?: string | null;
+}) {
   const [oneTapReady, setOneTapReady] = useState(false);
   const [oneTapError, setOneTapError] = useState<string | null>(null);
   const [signingIn, setSigningIn] = useState(false);
+  const [showToast, setShowToast] = useState(toast === "deleted");
 
   useEffect(() => {
     if (!googleClientId) {
@@ -98,6 +105,19 @@ export function HomeHero({ googleClientId }: { googleClientId: string }) {
     void loadOneTap();
   }, [googleClientId]);
 
+  useEffect(() => {
+    if (toast !== "deleted") {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setShowToast(false), 4000);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("toast");
+    window.history.replaceState({}, "", url.toString());
+
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
+
   return (
     <section className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-16">
       <div className="pointer-events-none absolute inset-0">
@@ -107,6 +127,15 @@ export function HomeHero({ googleClientId }: { googleClientId: string }) {
       </div>
 
       <div className="relative z-10 max-w-2xl text-center">
+        {showToast ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900 shadow-lg dark:border-green/40 dark:bg-gray-950 dark:text-gray-050"
+          >
+            Account deleted. You have been signed out.
+          </div>
+        ) : null}
         <p className="text-xs uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">
           Trivet
         </p>
