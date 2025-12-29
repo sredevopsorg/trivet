@@ -1,0 +1,174 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function HomeHero({ googleClientId }: { googleClientId: string }) {
+  const [oneTapReady, setOneTapReady] = useState(false);
+  const [oneTapError, setOneTapError] = useState<string | null>(null);
+  const [signingIn, setSigningIn] = useState(false);
+
+  useEffect(() => {
+    if (!googleClientId) {
+      return;
+    }
+
+    const loadOneTap = async () => {
+      setOneTapError(null);
+
+      try {
+        if (!window.google?.accounts?.id) {
+          await new Promise<void>((resolve, reject) => {
+            const existing = document.querySelector(
+              'script[src="https://accounts.google.com/gsi/client"]'
+            );
+            if (existing) {
+              existing.addEventListener("load", () => resolve());
+              existing.addEventListener("error", () => reject());
+              return;
+            }
+
+            const script = document.createElement("script");
+            script.src = "https://accounts.google.com/gsi/client";
+            script.async = true;
+            script.defer = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject();
+            document.head.appendChild(script);
+          });
+        }
+
+        if (!window.google?.accounts?.id) {
+          setOneTapError("Google One Tap unavailable");
+          return;
+        }
+
+        window.google.accounts.id.initialize({
+          client_id: googleClientId,
+          auto_select: false,
+          callback: async (response) => {
+            if (!response.credential) {
+              return;
+            }
+            setSigningIn(true);
+            try {
+              const result = await fetch("/api/auth/callback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  credential: response.credential,
+                  flow: "owner"
+                })
+              });
+              const data = (await result.json()) as { redirect?: string };
+              if (result.ok && data.redirect) {
+                window.location.assign(data.redirect);
+              } else {
+                setOneTapError("Unable to complete sign in");
+              }
+            } catch (error) {
+              console.error("One Tap sign-in failed", error);
+              setOneTapError("Unable to complete sign in");
+            } finally {
+              setSigningIn(false);
+            }
+          }
+        });
+
+        window.google.accounts.id.prompt();
+        setOneTapReady(true);
+      } catch (error) {
+        console.error("One Tap init failed", error);
+        setOneTapError("Google One Tap unavailable");
+      }
+    };
+
+    void loadOneTap();
+  }, [googleClientId]);
+
+  return (
+    <section className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-16">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 -top-32 h-72 w-72 rounded-full bg-yellow/40 blur-3xl" />
+        <div className="absolute right-10 top-10 h-64 w-64 rounded-full bg-blue/30 blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gray-050 blur-3xl dark:bg-gray-900" />
+      </div>
+
+      <div className="relative z-10 max-w-2xl text-center">
+        <p className="text-xs uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">
+          Trivet
+        </p>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
+          Free Google sign-in for Ghost blogs
+        </h1>
+        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          Replace magic links with a Google button your readers already trust.
+        </p>
+
+        <div className="mt-10 flex flex-col items-center gap-3">
+          <p className="text-sm font-semibold text-gray-900 dark:text-gray-050">
+            Do you use Ghost?
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            {oneTapReady || Boolean(oneTapError) || !googleClientId ? (
+              <Button asChild size="lg" disabled={signingIn}>
+                <Link href="/api/auth/google?flow=owner">
+                  {signingIn ? "Signing you in..." : "Yes, sign up"}
+                </Link>
+              </Button>
+            ) : (
+              <Skeleton className="h-12 w-40 rounded-full" />
+            )}
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="lg">
+                  No
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Trivet isn&apos;t for you</DialogTitle>
+                  <DialogDescription>
+                    Trivet only helps Ghost publishers add Google sign-in. If you
+                    need anything else, Contraption can help.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button asChild>
+                    <a
+                      href="https://www.contraption.co"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit Contraption
+                    </a>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+          {oneTapError ? (
+            <p className="text-xs text-red">{oneTapError}</p>
+          ) : (
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              One Tap will appear if your browser allows it.
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
