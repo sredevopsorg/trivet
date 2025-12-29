@@ -37,7 +37,7 @@ export function SignInClient({
 
   const errorMessage =
     error === "not-configured"
-      ? "This blog hasn’t finished Trivet setup yet. Try again later."
+      ? "This blog hasn't finished Trivet setup yet. Try again later."
       : "Please try again. If this keeps happening, reach out to the blog owner.";
 
   return (
