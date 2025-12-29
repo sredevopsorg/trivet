@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { EmbedStep } from "@/components/onboarding/embed-step";
@@ -16,8 +17,12 @@ export default async function EmbedOnboardingPage() {
     redirect("/onboarding/google");
   }
 
+  const headerList = headers();
+  const host =
+    headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "localhost:3000";
+  const protocol = headerList.get("x-forwarded-proto") ?? "http";
   const baseUrl =
-    process.env.TRIVET_PUBLIC_BASE_URL ?? "http://localhost:3000";
+    process.env.TRIVET_PUBLIC_BASE_URL ?? `${protocol}://${host}`;
 
   return (
     <OnboardingShell
