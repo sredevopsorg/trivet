@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { User } from "lucide-react";
+import { Settings } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -54,8 +54,9 @@ export function AuthControls() {
       <ThemeToggle />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="rounded-full">
-            <User className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="rounded-full px-4">
+            <Settings className="h-4 w-4" />
+            <span className="text-xs font-semibold">Settings</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
