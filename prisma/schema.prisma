@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LoginType {
+  NEW @map("new")
+  RETURNING @map("returning")
+}
+
+model Account {
+  id                      Int      @id @default(autoincrement())
+  uuid                    String   @unique @default(uuid())
+  email                   String   @unique
+  name                    String?
+  blogHost                String?  @map("blog_host")
+  adminHost               String?  @map("admin_host")
+  adminApiKey             String?  @map("admin_api_key")
+  googleOauthClientId     String?  @map("google_oauth_client_id")
+  googleOauthClientSecret String?  @map("google_oauth_client_secret")
+  googleOauthConfigured   Boolean  @default(false) @map("google_oauth_configured")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+  logins                  Login[]
+
+  @@map("accounts")
+}
+
+model Login {
+  id          Int       @id @default(autoincrement())
+  accountId   Int       @map("account_id")
+  memberEmail String    @map("member_email")
+  type        LoginType
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, createdAt])
+  @@index([accountId, memberEmail])
+  @@map("logins")
+}
