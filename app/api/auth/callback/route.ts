@@ -179,9 +179,15 @@ export async function GET(request: NextRequest) {
       where: { uuid: state.accountUuid }
     });
 
-    const clientId = account?.googleOauthClientId ?? process.env.GOOGLE_OAUTH_CLIENT_ID;
-    const clientSecret =
-      account?.googleOauthClientSecret ?? process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+    const useCustom = Boolean(
+      account?.googleOauthClientId && account?.googleOauthClientSecret
+    );
+    const clientId = useCustom
+      ? account?.googleOauthClientId
+      : process.env.GOOGLE_OAUTH_CLIENT_ID;
+    const clientSecret = useCustom
+      ? account?.googleOauthClientSecret
+      : process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
     if (!clientId || !clientSecret) {
       throw new Error("Missing Google OAuth credentials");
@@ -273,7 +279,12 @@ export async function POST(request: NextRequest) {
       where: { uuid: body.accountUuid }
     });
 
-    const clientId = account?.googleOauthClientId ?? process.env.GOOGLE_OAUTH_CLIENT_ID;
+    const useCustom = Boolean(
+      account?.googleOauthClientId && account?.googleOauthClientSecret
+    );
+    const clientId = useCustom
+      ? account?.googleOauthClientId
+      : process.env.GOOGLE_OAUTH_CLIENT_ID;
     if (clientId && userInfo.aud && userInfo.aud !== clientId) {
       return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
     }

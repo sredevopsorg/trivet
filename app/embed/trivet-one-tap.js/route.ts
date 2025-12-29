@@ -20,7 +20,12 @@ export async function GET(request: NextRequest) {
     where: { uuid: accountUuid }
   });
 
-  const clientId = account?.googleOauthClientId ?? process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const useCustom = Boolean(
+    account?.googleOauthClientId && account?.googleOauthClientSecret
+  );
+  const clientId = useCustom
+    ? account?.googleOauthClientId
+    : process.env.GOOGLE_OAUTH_CLIENT_ID;
   const baseUrl = process.env.TRIVET_PUBLIC_BASE_URL ?? origin;
 
   if (!account || !clientId || !account.adminApiKey || !account.adminHost) {
