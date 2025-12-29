@@ -38,10 +38,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const useCustom = Boolean(
-      account.googleOauthClientId && account.googleOauthClientSecret
-    );
-    clientId = useCustom ? account.googleOauthClientId : clientId;
+    if (account.googleOauthClientId && account.googleOauthClientSecret) {
+      clientId = account.googleOauthClientId;
+    }
   }
 
   if (!clientId) {

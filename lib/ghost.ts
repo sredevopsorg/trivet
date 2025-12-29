@@ -19,6 +19,8 @@ export function createGhostAdminClient({
   });
 }
 
+type GhostAdminClient = ReturnType<typeof createGhostAdminClient>;
+
 function getAdminUrl(adminHost: string) {
   return adminHost.startsWith("http") ? adminHost : `https://${adminHost}`;
 }
@@ -42,7 +44,7 @@ async function createGhostAdminToken(adminApiKey: string) {
 }
 
 export async function findMemberByEmail(
-  api: GhostAdminAPI,
+  api: GhostAdminClient,
   email: string
 ) {
   const members = (await api.members.browse({
@@ -54,7 +56,7 @@ export async function findMemberByEmail(
 }
 
 export async function createMember(
-  api: GhostAdminAPI,
+  api: GhostAdminClient,
   { email, name }: { email: string; name?: string }
 ) {
   return api.members.add({
@@ -65,7 +67,7 @@ export async function createMember(
 }
 
 export async function ensureMemberLabel(
-  api: GhostAdminAPI,
+  api: GhostAdminClient,
   member: { id: string; labels?: Array<{ name: string }> }
 ) {
   const hasLabel = member.labels?.some((label) => label.name === TRIVET_LABEL);

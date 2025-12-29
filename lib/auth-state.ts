@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 
 const STATE_EXPIRY_SECONDS = 60 * 10;
 
@@ -18,7 +18,7 @@ function getStateKey() {
 }
 
 export async function signAuthState(state: AuthState) {
-  return new SignJWT(state)
+  return new SignJWT(state as unknown as JWTPayload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(`${STATE_EXPIRY_SECONDS}s`)
@@ -27,5 +27,5 @@ export async function signAuthState(state: AuthState) {
 
 export async function verifyAuthState(token: string) {
   const { payload } = await jwtVerify(token, getStateKey());
-  return payload as AuthState;
+  return payload as unknown as AuthState;
 }

@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import type { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
@@ -20,7 +20,7 @@ function getSessionKey() {
 }
 
 export async function createSessionToken(payload: SessionPayload) {
-  return new SignJWT(payload)
+  return new SignJWT(payload as unknown as JWTPayload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(`${SESSION_EXPIRY_SECONDS}s`)
@@ -34,7 +34,7 @@ export async function getSession() {
   }
   try {
     const { payload } = await jwtVerify(token, getSessionKey());
-    return payload as SessionPayload;
+    return payload as unknown as SessionPayload;
   } catch {
     return null;
   }
@@ -47,7 +47,7 @@ export async function getSessionFromRequest(request: NextRequest) {
   }
   try {
     const { payload } = await jwtVerify(token, getSessionKey());
-    return payload as SessionPayload;
+    return payload as unknown as SessionPayload;
   } catch {
     return null;
   }

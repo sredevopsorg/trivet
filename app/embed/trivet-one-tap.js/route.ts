@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
       callback: async (response) => {
         if (!response || !response.credential) return;
         try {
-          const result = await fetch(`${TRIVET_BASE}/api/auth/callback`, {
+          const result = await fetch(TRIVET_BASE + "/api/auth/callback", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

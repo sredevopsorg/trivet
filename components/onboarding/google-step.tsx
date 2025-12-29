@@ -67,6 +67,10 @@ export function GoogleStep({
   });
 
   const mode = form.watch("mode");
+  const errors = form.formState.errors as Record<
+    string,
+    { message?: string } | undefined
+  >;
 
   return (
     <form
@@ -117,18 +121,18 @@ export function GoogleStep({
               <div className="space-y-2">
                 <Label htmlFor="clientId">Client ID</Label>
                 <Input id="clientId" {...form.register("clientId")} />
-                {form.formState.errors.clientId ? (
+                {errors.clientId ? (
                   <p className="text-xs text-red">
-                    {form.formState.errors.clientId.message}
+                    {errors.clientId.message}
                   </p>
                 ) : null}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="clientSecret">Client Secret</Label>
                 <Input id="clientSecret" {...form.register("clientSecret")} />
-                {form.formState.errors.clientSecret ? (
+                {errors.clientSecret ? (
                   <p className="text-xs text-red">
-                    {form.formState.errors.clientSecret.message}
+                    {errors.clientSecret.message}
                   </p>
                 ) : null}
               </div>

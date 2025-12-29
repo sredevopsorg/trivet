@@ -66,7 +66,7 @@ const fontVariationSettingsPlugin = plugin(function ({ addUtilities }) {
     fontVariationSettings: '"wdth" 50'
   };
 
-  addUtilities(utilities);
+  addUtilities(utilities as any);
 });
 
 const config: Config = {
