@@ -74,6 +74,23 @@ Optional:
 
 - `TRIVET_PUBLIC_BASE_URL` (defaults to the request origin)
 
+## Google OAuth Setup
+
+Create an OAuth 2.0 Client ID in Google Cloud Console (Application type: Web).
+
+Authorized JavaScript origins (include every origin where the Google button/One Tap runs):
+
+- `http://localhost:3000`
+- `https://trivet.contraption.co` (or your `TRIVET_PUBLIC_BASE_URL`)
+- Any Ghost blog origins that will load One Tap with this client ID
+
+Authorized redirect URIs:
+
+- `http://localhost:3000/api/auth/callback`
+- `https://trivet.contraption.co/api/auth/callback` (or `${TRIVET_PUBLIC_BASE_URL}/api/auth/callback`)
+
+Use the resulting client ID/secret for `GOOGLE_OAUTH_CLIENT_ID` and `GOOGLE_OAUTH_CLIENT_SECRET` (or enter them in the custom Google setup step for a specific account).
+
 ## License
 
 MIT
