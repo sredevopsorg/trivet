@@ -75,7 +75,9 @@ export function GoogleStep({
   return (
     <form
       className="space-y-6"
-      onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
+      onSubmit={(event) =>
+        void form.handleSubmit((values) => mutation.mutate(values))(event)
+      }
     >
       <Tabs
         value={mode}

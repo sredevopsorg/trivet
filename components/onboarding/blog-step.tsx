@@ -47,7 +47,9 @@ export function BlogStep({ defaultValue }: { defaultValue: string }) {
   return (
     <form
       className="space-y-6"
-      onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
+      onSubmit={(event) =>
+        void form.handleSubmit((values) => mutation.mutate(values))(event)
+      }
     >
       <div className="space-y-2">
         <Label htmlFor="blogUrl">Blog URL</Label>

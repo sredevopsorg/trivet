@@ -62,35 +62,39 @@ export function HomeHero({
           return;
         }
 
+        const handleCredential = async (response: { credential?: string }) => {
+          if (!response.credential) {
+            return;
+          }
+          setSigningIn(true);
+          try {
+            const result = await fetch("/api/auth/callback", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                credential: response.credential,
+                flow: "owner"
+              })
+            });
+            const data = (await result.json()) as { redirect?: string };
+            if (result.ok && data.redirect) {
+              window.location.assign(data.redirect);
+            } else {
+              setOneTapError("Unable to complete sign in");
+            }
+          } catch (error) {
+            console.error("One Tap sign-in failed", error);
+            setOneTapError("Unable to complete sign in");
+          } finally {
+            setSigningIn(false);
+          }
+        };
+
         window.google.accounts.id.initialize({
           client_id: googleClientId,
           auto_select: false,
-          callback: async (response) => {
-            if (!response.credential) {
-              return;
-            }
-            setSigningIn(true);
-            try {
-              const result = await fetch("/api/auth/callback", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  credential: response.credential,
-                  flow: "owner"
-                })
-              });
-              const data = (await result.json()) as { redirect?: string };
-              if (result.ok && data.redirect) {
-                window.location.assign(data.redirect);
-              } else {
-                setOneTapError("Unable to complete sign in");
-              }
-            } catch (error) {
-              console.error("One Tap sign-in failed", error);
-              setOneTapError("Unable to complete sign in");
-            } finally {
-              setSigningIn(false);
-            }
+          callback: (response) => {
+            void handleCredential(response);
           }
         });
 

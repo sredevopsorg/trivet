@@ -5,21 +5,42 @@ const GHOST_ADMIN_VERSION = "v5.0";
 const GHOST_ADMIN_AUDIENCE = "/v5/admin/";
 const TRIVET_LABEL = "Trivet";
 
+export interface GhostMember {
+  id: string;
+  labels?: Array<{ name: string }>;
+}
+
+export interface GhostAdminClient {
+  members: {
+    browse: (options: { filter: string; limit: number }) => Promise<GhostMember[]>;
+    add: (data: {
+      email: string;
+      name?: string;
+      labels?: Array<{ name: string }>;
+    }) => Promise<GhostMember>;
+    edit: (data: {
+      id: string;
+      labels?: Array<{ name: string }>;
+    }) => Promise<GhostMember>;
+  };
+  site: {
+    read: () => Promise<unknown>;
+  };
+}
+
 export function createGhostAdminClient({
   adminHost,
   adminApiKey
 }: {
   adminHost: string;
   adminApiKey: string;
-}) {
+}): GhostAdminClient {
   return new GhostAdminAPI({
     url: adminHost.startsWith("http") ? adminHost : `https://${adminHost}`,
     key: adminApiKey,
     version: GHOST_ADMIN_VERSION
   });
 }
-
-type GhostAdminClient = ReturnType<typeof createGhostAdminClient>;
 
 function getAdminUrl(adminHost: string) {
   return adminHost.startsWith("http") ? adminHost : `https://${adminHost}`;
@@ -43,23 +64,20 @@ async function createGhostAdminToken(adminApiKey: string) {
     .sign(key);
 }
 
-export async function findMemberByEmail(
-  api: GhostAdminClient,
-  email: string
-) {
-  const members = (await api.members.browse({
+export async function findMemberByEmail(api: GhostAdminClient, email: string) {
+  const members = await api.members.browse({
     filter: `email:\"${email}\"`,
     limit: 1
-  })) as Array<{ id: string; labels?: Array<{ name: string }> }>;
+  });
 
-  return members?.[0] ?? null;
+  return members[0] ?? null;
 }
 
 export async function createMember(
   api: GhostAdminClient,
   { email, name }: { email: string; name?: string }
 ) {
-  return api.members.add({
+  return await api.members.add({
     email,
     name,
     labels: [{ name: TRIVET_LABEL }]
@@ -68,7 +86,7 @@ export async function createMember(
 
 export async function ensureMemberLabel(
   api: GhostAdminClient,
-  member: { id: string; labels?: Array<{ name: string }> }
+  member: GhostMember
 ) {
   const hasLabel = member.labels?.some((label) => label.name === TRIVET_LABEL);
   if (hasLabel) {
@@ -76,7 +94,7 @@ export async function ensureMemberLabel(
   }
 
   const labels = [...(member.labels ?? []), { name: TRIVET_LABEL }];
-  return api.members.edit({
+  return await api.members.edit({
     id: member.id,
     labels
   });
@@ -127,4 +145,15 @@ export async function createMemberSignInUrl({
   }
 
   return signInUrl;
+}
+
+export async function validateAdminApiKey({
+  adminHost,
+  adminApiKey
+}: {
+  adminHost: string;
+  adminApiKey: string;
+}) {
+  const api = createGhostAdminClient({ adminHost, adminApiKey });
+  await api.site.read();
 }

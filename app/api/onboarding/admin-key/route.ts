@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { getSessionFromRequest } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { createGhostAdminClient } from "@/lib/ghost";
+import { validateAdminApiKey } from "@/lib/ghost";
 
 const adminKeySchema = z.object({
   adminApiKey: z
@@ -32,11 +32,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const api = createGhostAdminClient({
+    await validateAdminApiKey({
       adminHost: account.adminHost,
       adminApiKey: body.data.adminApiKey
     });
-    await api.site.read();
 
     const updated = await prisma.account.update({
       where: { id: session.accountId },

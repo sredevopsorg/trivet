@@ -96,7 +96,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
             Use this link for Ghost Navigation or any custom button.
           </p>
           <p className="text-xs text-gray-500">
-            Note: Ghost Navigation can't hide links for logged-in members.
+            Note: Ghost Navigation cannot hide links for logged-in members.
           </p>
           <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200">
             <code>{linkUrl}</code>

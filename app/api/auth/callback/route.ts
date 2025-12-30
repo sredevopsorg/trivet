@@ -105,7 +105,7 @@ async function handleMemberSignIn({
   const signInUrl = await createMemberSignInUrl({
     adminHost: account.adminHost,
     adminApiKey: account.adminApiKey,
-    memberId: (member as { id: string }).id,
+    memberId: member.id,
     redirect
   });
 

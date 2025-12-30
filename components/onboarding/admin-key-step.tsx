@@ -52,7 +52,9 @@ export function AdminKeyStep({ adminHost }: { adminHost: string }) {
   return (
     <form
       className="space-y-6"
-      onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
+      onSubmit={(event) =>
+        void form.handleSubmit((values) => mutation.mutate(values))(event)
+      }
     >
       <div className="space-y-2 rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-300">
         <p>
