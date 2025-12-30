@@ -95,7 +95,8 @@ export function GoogleStep({
             <Skeleton className="h-24 w-full rounded-2xl" />
           ) : (
             <div className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-300">
-              Use Trivet&apos;s Google OAuth credentials. No extra setup required.
+              Use Trivet&apos;s Google OAuth credentials for link-based sign-in.
+              One Tap requires your own Google app, but you can switch later.
             </div>
           )}
         </TabsContent>
@@ -106,6 +107,7 @@ export function GoogleStep({
           ) : (
             <div className="space-y-4">
               <div className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-300">
+                Custom Google OAuth is required for One Tap and recommended.
                 Create OAuth credentials in Google Cloud Console and add the
                 redirect URI for this app. Then paste the Client ID and Client
                 Secret here.

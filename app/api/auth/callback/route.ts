@@ -282,9 +282,14 @@ export async function POST(request: NextRequest) {
     const useCustom = Boolean(
       account?.googleOauthClientId && account?.googleOauthClientSecret
     );
-    const clientId = useCustom
-      ? account?.googleOauthClientId
-      : process.env.GOOGLE_OAUTH_CLIENT_ID;
+    if (!useCustom) {
+      return NextResponse.json(
+        { error: "Custom Google OAuth is required for One Tap" },
+        { status: 400 }
+      );
+    }
+
+    const clientId = account?.googleOauthClientId;
     if (clientId && userInfo.aud && userInfo.aud !== clientId) {
       return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
     }

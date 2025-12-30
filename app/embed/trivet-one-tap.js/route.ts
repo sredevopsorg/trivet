@@ -23,18 +23,28 @@ export async function GET(request: NextRequest) {
   const useCustom = Boolean(
     account?.googleOauthClientId && account?.googleOauthClientSecret
   );
-  const clientId = useCustom
-    ? account?.googleOauthClientId
-    : process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const clientId = account?.googleOauthClientId;
   const baseUrl = process.env.TRIVET_PUBLIC_BASE_URL ?? origin;
 
-  if (!account || !clientId || !account.adminApiKey || !account.adminHost) {
+  if (!account || !account.adminApiKey || !account.adminHost) {
     return new NextResponse("// Trivet account not configured", {
       headers: {
         "Content-Type": "application/javascript; charset=utf-8",
         "Cache-Control": "public, max-age=3600"
       }
     });
+  }
+
+  if (!useCustom || !clientId) {
+    return new NextResponse(
+      "// One Tap requires custom Google OAuth credentials",
+      {
+        headers: {
+          "Content-Type": "application/javascript; charset=utf-8",
+          "Cache-Control": "public, max-age=3600"
+        }
+      }
+    );
   }
 
   const script = `(() => {

@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface AccountResponse {
   uuid: string;
   adminHost: string | null;
+  googleMode: "custom" | "trivet";
 }
 
 export function EmbedStep({ baseUrl }: { baseUrl: string }) {
@@ -34,6 +35,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
     );
   }
 
+  const canUseOneTap = data.googleMode === "custom";
   const codeInjectionUrl = data.adminHost
     ? `${data.adminHost.replace(/\/$/, "")}/ghost/#/settings/code-injection`
     : "";
@@ -50,28 +52,43 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
     <div className="space-y-6">
       <Tabs defaultValue="one-tap">
         <TabsList>
-          <TabsTrigger value="one-tap">One Tap (recommended)</TabsTrigger>
+          <TabsTrigger value="one-tap">One Tap (custom required)</TabsTrigger>
           <TabsTrigger value="link">Link / Href</TabsTrigger>
           <TabsTrigger value="theme">Theme template</TabsTrigger>
         </TabsList>
 
         <TabsContent value="one-tap" className="space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            Paste this in Ghost Code Injection (Site Header) to enable One Tap.
-          </p>
-          {codeInjectionUrl ? (
-            <a
-              href={codeInjectionUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-semibold"
-            >
-              Open Ghost Code Injection
-            </a>
-          ) : null}
-          <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200">
-            <code>{embedScript}</code>
-          </pre>
+          {canUseOneTap ? (
+            <>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Paste this in Ghost Code Injection (Site Header) to enable One
+                Tap.
+              </p>
+              {codeInjectionUrl ? (
+                <a
+                  href={codeInjectionUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-semibold"
+                >
+                  Open Ghost Code Injection
+                </a>
+              ) : null}
+              <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200">
+                <code>{embedScript}</code>
+              </pre>
+            </>
+          ) : (
+            <div className="rounded-2xl border border-yellow/40 bg-yellow/10 p-4 text-sm text-gray-700 dark:border-yellow/40 dark:bg-yellow/10 dark:text-gray-100">
+              One Tap requires a custom Google OAuth app. Go back and enter your
+              own credentials to enable it.
+              <div className="mt-3">
+                <Button asChild size="sm">
+                  <Link href="/onboarding/google">Update Google setup</Link>
+                </Button>
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="link" className="space-y-4">
@@ -79,7 +96,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
             Use this link for Ghost Navigation or any custom button.
           </p>
           <p className="text-xs text-gray-500">
-            Note: Ghost Navigation can’t hide links for logged-in members.
+            Note: Ghost Navigation can't hide links for logged-in members.
           </p>
           <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200">
             <code>{linkUrl}</code>

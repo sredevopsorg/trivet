@@ -24,7 +24,10 @@ export async function GET(request: NextRequest) {
     name: account.name,
     blogHost: account.blogHost,
     adminHost: account.adminHost,
-    googleMode: account.googleOauthClientId ? "custom" : "trivet",
+    googleMode:
+      account.googleOauthClientId && account.googleOauthClientSecret
+        ? "custom"
+        : "trivet",
     hasAdminKey: Boolean(account.adminApiKey)
   });
 }
