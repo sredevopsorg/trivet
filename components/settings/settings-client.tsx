@@ -72,14 +72,14 @@ export function SettingsClient({
           </div>
         </div>
 
-        <div className="rounded-3xl border border-red/20 bg-red/5 p-6 dark:border-red/30 dark:bg-red/10">
+        <div className="rounded-3xl border border-red/30 p-6 dark:border-red/30">
           <div className="text-sm font-semibold text-red">Delete account</div>
           <p className="mt-2 text-sm text-red">
             This removes your Trivet account, configuration, and sign-in history.
           </p>
           <Button
             variant="outline"
-            className="mt-4 border-red/40 text-red hover:bg-red/10"
+            className="mt-4 border-red/40 text-red hover:bg-transparent"
             onClick={() => setOpen(true)}
           >
             Delete account
@@ -112,7 +112,7 @@ export function SettingsClient({
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-red/40 text-red hover:bg-red/10"
+                  className="border-red/40 text-red hover:bg-transparent"
                   onClick={() => setStep(2)}
                 >
                   Continue
@@ -144,7 +144,7 @@ export function SettingsClient({
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-red/40 text-red hover:bg-red/10"
+                  className="border-red/40 text-red hover:bg-transparent"
                   disabled={
                     confirmText !== "DELETE" || deleteMutation.isPending
                   }

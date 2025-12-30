@@ -34,7 +34,7 @@ body {
 }
 
 body {
-  @apply bg-white text-gray-900 dark:bg-gray-975 dark:text-gray-050;
+  @apply bg-gray-050 text-gray-900 dark:bg-gray-975 dark:text-gray-050;
 }
 
 a {

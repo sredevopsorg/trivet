@@ -3,7 +3,7 @@ import { Logo } from "@/components/site/logo";
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 bg-white dark:bg-gray-975">
+    <header className="sticky top-0 z-40 bg-gray-050 dark:bg-gray-975">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Logo />
         <AuthControls />

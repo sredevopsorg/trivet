@@ -36,7 +36,7 @@ export default function RootLayout({
       <body className="min-h-screen font-sans">
         <ThemeProvider>
           <QueryProvider>
-            <div className="min-h-screen bg-white dark:bg-gray-975">
+            <div className="min-h-screen bg-gray-050 dark:bg-gray-975">
               <Navbar />
               {children}
             </div>

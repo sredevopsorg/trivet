@@ -134,7 +134,7 @@ export function HomeHero({
             Account deleted. You have been signed out.
           </div>
         ) : null}
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
+        <h1 className="text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">

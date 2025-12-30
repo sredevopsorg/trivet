@@ -79,7 +79,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
               </pre>
             </>
           ) : (
-            <div className="rounded-2xl border border-yellow/40 bg-yellow/10 p-4 text-sm text-gray-700 dark:border-yellow/40 dark:bg-yellow/10 dark:text-gray-100">
+            <div className="rounded-2xl border border-yellow/40 p-4 text-sm text-gray-700 dark:border-yellow/40 dark:text-gray-100">
               One Tap requires a custom Google OAuth app. Go back and enter your
               own credentials to enable it.
               <div className="mt-3">
