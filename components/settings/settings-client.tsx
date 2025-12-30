@@ -65,7 +65,7 @@ export function SettingsClient({
       </div>
 
       <div className="space-y-6">
-        <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-900 dark:bg-gray-950">
+        <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-gray-900 dark:bg-gray-950">
           <div className="text-sm font-semibold">Account</div>
           <div className="mt-3 text-sm text-gray-600 dark:text-gray-300">
             {name ? `${name} · ${email}` : email}

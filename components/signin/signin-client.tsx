@@ -42,7 +42,7 @@ export function SignInClient({
 
   return (
     <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-xl flex-col items-center justify-center px-6 text-center">
-      <div className="rounded-3xl border border-gray-100 bg-white/90 p-8 shadow-sm backdrop-blur dark:border-gray-900 dark:bg-gray-950/90">
+      <div className="rounded-3xl border border-gray-100 bg-white p-8 dark:border-gray-900 dark:bg-gray-950">
         {error ? (
           <>
             <h1 className="text-2xl font-semibold text-gray-950 dark:text-white">

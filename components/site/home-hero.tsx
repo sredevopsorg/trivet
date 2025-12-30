@@ -123,26 +123,17 @@ export function HomeHero({
   }, [toast]);
 
   return (
-    <section className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-16">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 -top-32 h-72 w-72 rounded-full bg-yellow/40 blur-3xl" />
-        <div className="absolute right-10 top-10 h-64 w-64 rounded-full bg-blue/30 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gray-050 blur-3xl dark:bg-gray-900" />
-      </div>
-
-      <div className="relative z-10 max-w-2xl text-center">
+    <section className="flex flex-1 items-center justify-center px-6 py-16">
+      <div className="max-w-2xl text-center">
         {showToast ? (
           <div
             role="status"
             aria-live="polite"
-            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900 shadow-lg dark:border-green/40 dark:bg-gray-950 dark:text-gray-050"
+            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900 dark:border-green/40 dark:bg-gray-950 dark:text-gray-050"
           >
             Account deleted. You have been signed out.
           </div>
         ) : null}
-        <p className="text-xs uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">
-          Trivet
-        </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
@@ -195,11 +186,7 @@ export function HomeHero({
           </div>
           {oneTapError ? (
             <p className="text-xs text-red">{oneTapError}</p>
-          ) : (
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              One Tap will appear if your browser allows it.
-            </p>
-          )}
+          ) : null}
         </div>
       </div>
     </section>

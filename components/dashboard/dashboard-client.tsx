@@ -67,7 +67,7 @@ export function DashboardClient() {
         <Card className="space-y-4">
           <div className="text-sm font-semibold">Sign-ins per day</div>
           {analyticsQuery.isLoading ? (
-            <div className="h-64 rounded-3xl border border-gray-100 bg-[linear-gradient(0deg,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px] dark:border-gray-900" />
+            <Skeleton className="h-64 w-full rounded-3xl" />
           ) : analyticsQuery.data ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
