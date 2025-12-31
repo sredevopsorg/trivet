@@ -172,8 +172,7 @@ export function HomeHero({
                 <DialogHeader>
                   <DialogTitle>Check out my other projects</DialogTitle>
                   <DialogDescription>
-                    I write about crafting digital tools and build projects. If you&apos;re
-                    looking for something else, there&apos;s more to explore.
+                    I write about crafting digital tools and build projects. There&apos;s more to explore:
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="items-start sm:justify-start">
@@ -183,7 +182,7 @@ export function HomeHero({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Go to contraption.co
+                      Go to contraption.co &rarr;
                     </a>
                   </Button>
                 </DialogFooter>
