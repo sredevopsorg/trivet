@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 import {
   Dialog,
@@ -137,13 +138,19 @@ export function HomeHero({
         <h1 className="text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
-        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-          Replace magic links with a Google button your readers already trust.
-        </p>
-
         <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-sm font-semibold text-gray-900 dark:text-gray-050">
-            Do you use Ghost?
+          <p className="text-xl font-semibold text-gray-900 dark:text-gray-050 sm:text-2xl">
+            Do you use{" "}
+            <a
+              href="https://ghost.org"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 underline decoration-gray-400 underline-offset-4"
+            >
+              Ghost
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            ?
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             {oneTapReady || Boolean(oneTapError) || !googleClientId ? (
