@@ -113,17 +113,15 @@ export async function createMemberSignInUrl({
 }) {
   const token = await createGhostAdminToken(adminApiKey);
   const url = new URL(
-    `/ghost/api/admin/members/${memberId}/signin_urls/`,
+    `/ghost/api/admin/members/${memberId}/signin_urls`,
     getAdminUrl(adminHost)
   );
 
   const response = await fetch(url.toString(), {
-    method: "POST",
+    method: "GET",
     headers: {
-      Authorization: `Ghost ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(redirect ? { redirect } : {})
+      Authorization: `Ghost ${token}`
+    }
   });
 
   if (!response.ok) {
@@ -135,10 +133,15 @@ export async function createMemberSignInUrl({
     url?: string;
     signin_url?: string;
     signin_urls?: Array<{ url: string }>;
+    member_signin_urls?: Array<{ url?: string }>;
   };
 
   const signInUrl =
-    data.url ?? data.signin_url ?? data.signin_urls?.[0]?.url ?? null;
+    data.url ??
+    data.signin_url ??
+    data.signin_urls?.[0]?.url ??
+    data.member_signin_urls?.[0]?.url ??
+    null;
 
   if (!signInUrl) {
     throw new Error("Ghost sign-in URL missing");
