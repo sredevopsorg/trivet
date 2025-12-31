@@ -103,13 +103,11 @@ export async function ensureMemberLabel(
 export async function createMemberSignInUrl({
   adminHost,
   adminApiKey,
-  memberId,
-  redirect
+  memberId
 }: {
   adminHost: string;
   adminApiKey: string;
   memberId: string;
-  redirect?: string | null;
 }) {
   const token = await createGhostAdminToken(adminApiKey);
   const url = new URL(

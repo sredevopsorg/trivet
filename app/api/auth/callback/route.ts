@@ -75,13 +75,11 @@ function getOwnerRedirect(account: {
 async function handleMemberSignIn({
   accountUuid,
   email,
-  name,
-  redirect
+  name
 }: {
   accountUuid: string;
   email: string;
   name?: string;
-  redirect?: string | null;
 }) {
   const account = await prisma.account.findUnique({
     where: { uuid: accountUuid }
@@ -105,8 +103,7 @@ async function handleMemberSignIn({
   const signInUrl = await createMemberSignInUrl({
     adminHost: account.adminHost,
     adminApiKey: account.adminApiKey,
-    memberId: member.id,
-    redirect
+    memberId: member.id
   });
 
   await prisma.login.create({
@@ -207,13 +204,10 @@ export async function GET(request: NextRequest) {
       throw new Error("Token audience mismatch");
     }
 
-    const redirect = ensureSafeRedirect(state.redirect ?? null, origin);
-
     const signInUrl = await handleMemberSignIn({
       accountUuid: state.accountUuid,
       email: userInfo.email,
-      name: userInfo.name,
-      redirect
+      name: userInfo.name
     });
 
     const validatedSignIn = ensureSafeRedirect(signInUrl, origin);
@@ -292,13 +286,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
     }
 
-    const redirect = ensureSafeRedirect(body.redirect ?? null, origin);
-
     const signInUrl = await handleMemberSignIn({
       accountUuid: body.accountUuid,
       email: userInfo.email,
-      name: userInfo.name,
-      redirect
+      name: userInfo.name
     });
 
     const validatedSignIn = ensureSafeRedirect(signInUrl, origin);
