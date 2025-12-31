@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { z } from "zod";
 import { Check, Copy } from "lucide-react";
 
@@ -43,7 +43,6 @@ export function GoogleStep({
 }) {
   const router = useRouter();
   const [isSwitching, startTransition] = useTransition();
-  const clientIdRef = useRef<HTMLInputElement>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const trivetOrigin = new URL(baseUrl).origin;
@@ -85,9 +84,9 @@ export function GoogleStep({
 
   useEffect(() => {
     if (mode === "custom" && !isSwitching) {
-      clientIdRef.current?.focus();
+      form.setFocus("clientId");
     }
-  }, [mode, isSwitching]);
+  }, [mode, isSwitching, form]);
 
   useEffect(() => {
     if (!copiedField) {
@@ -172,7 +171,7 @@ export function GoogleStep({
                           </span>
                           <button
                             type="button"
-                            onClick={() => handleCopy(resolvedBlogOrigin, "origin")}
+                            onClick={() => void handleCopy(resolvedBlogOrigin, "origin")}
                             className="rounded-full p-2 text-gray-500 transition hover:text-gray-900"
                             aria-label="Copy JavaScript origin"
                           >
@@ -194,7 +193,7 @@ export function GoogleStep({
                           </span>
                           <button
                             type="button"
-                            onClick={() => handleCopy(redirectUri, "redirect")}
+                            onClick={() => void handleCopy(redirectUri, "redirect")}
                             className="rounded-full p-2 text-gray-500 transition hover:text-gray-900"
                             aria-label="Copy redirect URI"
                           >
@@ -229,7 +228,6 @@ export function GoogleStep({
                 <Label htmlFor="clientId">Client ID</Label>
                 <Input
                   id="clientId"
-                  ref={clientIdRef}
                   {...form.register("clientId")}
                 />
                 {errors.clientId ? (

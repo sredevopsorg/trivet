@@ -24,7 +24,6 @@ export default async function SignInPage({
       <SignInClient
         accountUuid={params.accountUuid}
         error="not-found"
-        blogHost={null}
       />
     );
   }
@@ -32,7 +31,6 @@ export default async function SignInPage({
   return (
     <SignInClient
       accountUuid={params.accountUuid}
-      blogHost={account.blogHost}
       error={searchParams?.error}
       redirect={searchParams?.redirect}
     />
