@@ -5,9 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Settings } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThemeToggle } from "@/components/site/theme-toggle";
 
 interface SessionResponse {
   authenticated: boolean;
@@ -41,7 +46,6 @@ export function AuthControls() {
   if (!data?.authenticated) {
     return (
       <div className="flex items-center gap-3">
-        <ThemeToggle />
         <Button asChild>
           <Link href="/api/auth/google?flow=owner">Sign up with Google</Link>
         </Button>
@@ -51,7 +55,6 @@ export function AuthControls() {
 
   return (
     <div className="flex items-center gap-3">
-      <ThemeToggle />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" className="rounded-full px-4">

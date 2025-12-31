@@ -55,10 +55,10 @@ export function DashboardClient() {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-12">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-gray-950 dark:text-white">
+        <h1 className="text-3xl font-semibold text-gray-950">
           Dashboard
         </h1>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+        <p className="mt-2 text-sm text-gray-600">
           Track new vs returning sign-ins and manage your configuration.
         </p>
       </div>
@@ -98,7 +98,7 @@ export function DashboardClient() {
             <div className="space-y-3 text-sm">
               <div>
                 <div className="text-xs uppercase text-gray-500">Blog</div>
-                <div className="text-gray-900 dark:text-gray-050">
+                <div className="text-gray-900">
                   {accountQuery.data.blogHost ?? "Not set"}
                 </div>
                 <Link href="/onboarding/blog" className="text-xs">
@@ -107,7 +107,7 @@ export function DashboardClient() {
               </div>
               <div>
                 <div className="text-xs uppercase text-gray-500">Admin</div>
-                <div className="text-gray-900 dark:text-gray-050">
+                <div className="text-gray-900">
                   {accountQuery.data.adminHost ?? "Not set"}
                 </div>
                 <Link href="/onboarding/admin-key" className="text-xs">
@@ -116,7 +116,7 @@ export function DashboardClient() {
               </div>
               <div>
                 <div className="text-xs uppercase text-gray-500">Google</div>
-                <div className="text-gray-900 dark:text-gray-050">
+                <div className="text-gray-900">
                   {accountQuery.data.googleMode === "custom"
                     ? "Custom OAuth"
                     : "Trivet branded"}

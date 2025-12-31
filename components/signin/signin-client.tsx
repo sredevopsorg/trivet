@@ -42,13 +42,13 @@ export function SignInClient({
 
   return (
     <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-xl flex-col items-center justify-center px-6 text-center">
-      <div className="rounded-3xl border border-gray-100 bg-white p-8 dark:border-gray-900 dark:bg-gray-950">
+      <div className="rounded-3xl border border-gray-100 bg-white p-8">
         {error ? (
           <>
-            <h1 className="text-2xl font-semibold text-gray-950 dark:text-white">
+            <h1 className="text-2xl font-semibold text-gray-950">
               We couldn&apos;t sign you in
             </h1>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-sm text-gray-600">
               {errorMessage}
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -67,10 +67,10 @@ export function SignInClient({
             <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
               Signing you in
             </p>
-            <h1 className="mt-4 text-2xl font-semibold text-gray-950 dark:text-white">
+            <h1 className="mt-4 text-2xl font-semibold text-gray-950">
               Signing you in with Google
             </h1>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-sm text-gray-600">
               {hasRedirected
                 ? "Redirecting to Google..."
                 : "Preparing your sign-in..."}

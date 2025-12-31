@@ -56,7 +56,7 @@ export function AdminKeyStep({ adminHost }: { adminHost: string }) {
         void form.handleSubmit((values) => mutation.mutate(values))(event)
       }
     >
-      <div className="space-y-2 rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700 dark:border-gray-900 dark:bg-gray-900 dark:text-gray-300">
+      <div className="space-y-2 rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700">
         <p>
           Create a new Ghost integration called <strong>Trivet</strong>, then
           paste the Admin API key here.

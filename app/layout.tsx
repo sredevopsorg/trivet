@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/query-provider";
 import { Navbar } from "@/components/site/navbar";
 import "./globals.css";
@@ -32,16 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className="min-h-screen font-sans">
-        <ThemeProvider>
-          <QueryProvider>
-            <div className="min-h-screen bg-gray-050 dark:bg-gray-975">
-              <Navbar />
-              {children}
-            </div>
-          </QueryProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <div className="min-h-screen bg-gray-050">
+            <Navbar />
+            {children}
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -56,23 +56,23 @@ export function SettingsClient({
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-12">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-gray-950 dark:text-white">
+        <h1 className="text-3xl font-semibold text-gray-950">
           Settings
         </h1>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+        <p className="mt-2 text-sm text-gray-600">
           Manage your Trivet account details.
         </p>
       </div>
 
       <div className="space-y-6">
-        <div className="rounded-3xl border border-gray-100 bg-white p-6 dark:border-gray-900 dark:bg-gray-950">
+        <div className="rounded-3xl border border-gray-100 bg-white p-6">
           <div className="text-sm font-semibold">Account</div>
-          <div className="mt-3 text-sm text-gray-600 dark:text-gray-300">
+          <div className="mt-3 text-sm text-gray-600">
             {name ? `${name} · ${email}` : email}
           </div>
         </div>
 
-        <div className="rounded-3xl border border-red/30 p-6 dark:border-red/30">
+        <div className="rounded-3xl border border-red/30 p-6">
           <div className="text-sm font-semibold text-red">Delete account</div>
           <p className="mt-2 text-sm text-red">
             This removes your Trivet account, configuration, and sign-in history.

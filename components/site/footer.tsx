@@ -1,7 +1,7 @@
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="flex h-24 items-center justify-center text-center text-xs text-gray-600 dark:text-gray-400">
+    <footer className="flex h-24 items-center justify-center text-center text-xs text-gray-600">
       <p>
         © Copyright {year} The Contraption Company.{" "}
         <a href="https://www.contraption.co" target="_blank" rel="noreferrer">

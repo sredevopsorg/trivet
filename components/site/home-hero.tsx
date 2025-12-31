@@ -130,16 +130,16 @@ export function HomeHero({
           <div
             role="status"
             aria-live="polite"
-            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900 dark:border-green/40 dark:bg-gray-950 dark:text-gray-050"
+            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900"
           >
             Account deleted. You have been signed out.
           </div>
         ) : null}
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
+        <h1 className="text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
         <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-xl font-semibold text-gray-800 dark:text-gray-200 sm:text-2xl">
+          <p className="text-xl font-semibold text-gray-800 sm:text-2xl">
             Do you use{" "}
             <a
               href="https://ghost.org"
@@ -170,20 +170,20 @@ export function HomeHero({
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                <DialogTitle>Check out my other projects</DialogTitle>
-                <DialogDescription>
-                  Trivet is just one thing I&apos;ve built. If you&apos;re looking for
-                  something else, there&apos;s more to explore.
-                </DialogDescription>
+                  <DialogTitle>Check out my other projects</DialogTitle>
+                  <DialogDescription>
+                    I write about crafting digital tools and build projects. If you&apos;re
+                    looking for something else, there&apos;s more to explore.
+                  </DialogDescription>
                 </DialogHeader>
-                <DialogFooter>
+                <DialogFooter className="items-start sm:justify-start">
                   <Button asChild>
                     <a
                       href="https://www.contraption.co"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      See other projects
+                      Go to contraption.co
                     </a>
                   </Button>
                 </DialogFooter>
