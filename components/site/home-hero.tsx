@@ -152,7 +152,7 @@ export function HomeHero({
             />
           </a>
         </div>
-        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-950 text-balance sm:text-5xl">
+        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-950 text-pretty sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
         <div className="mt-10 flex flex-col items-center gap-3">
