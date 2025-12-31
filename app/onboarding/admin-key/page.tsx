@@ -15,11 +15,13 @@ export default async function AdminKeyOnboardingPage() {
 
   return (
     <OnboardingShell
-      step="2 of 4"
+      step={2}
       title="Create a new integration for Trivet"
-      description="Paste the Admin API key so Trivet can create members for you."
     >
-      <AdminKeyStep adminHost={account.adminHost} />
+      <AdminKeyStep
+        adminHost={account.adminHost}
+        defaultValue={account.adminApiKey}
+      />
     </OnboardingShell>
   );
 }

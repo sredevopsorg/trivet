@@ -2,10 +2,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { prisma } from "@/lib/db";
+import { getPublicBaseUrl } from "@/lib/url";
 
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
   const accountUuid = searchParams.get("account");
+  const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
 
   if (!accountUuid) {
     return new NextResponse("// Missing account parameter", {
@@ -24,8 +26,6 @@ export async function GET(request: NextRequest) {
     account?.googleOauthClientId && account?.googleOauthClientSecret
   );
   const clientId = account?.googleOauthClientId;
-  const baseUrl = process.env.TRIVET_PUBLIC_BASE_URL ?? origin;
-
   if (!account || !account.adminApiKey || !account.adminHost) {
     return new NextResponse("// Trivet account not configured", {
       headers: {

@@ -4,10 +4,12 @@ import type { NextRequest } from "next/server";
 import { signAuthState } from "@/lib/auth-state";
 import { prisma } from "@/lib/db";
 import { buildGoogleAuthUrl } from "@/lib/google";
-import { ensureSafeRedirect } from "@/lib/url";
+import { ensureSafeRedirect, getPublicBaseUrl } from "@/lib/url";
 
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
+  const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
+  const origin = new URL(baseUrl).origin;
   const flow = searchParams.get("flow") as "owner" | "member" | null;
 
   if (!flow) {
@@ -48,10 +50,7 @@ export async function GET(request: NextRequest) {
   }
 
   const redirectParam = searchParams.get("redirect");
-  const redirect = ensureSafeRedirect(
-    redirectParam,
-    process.env.TRIVET_PUBLIC_BASE_URL ?? origin
-  );
+  const redirect = ensureSafeRedirect(redirectParam, origin);
 
   const state = await signAuthState({
     flow,

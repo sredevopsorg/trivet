@@ -12,11 +12,10 @@ export default async function BlogOnboardingPage() {
 
   return (
     <OnboardingShell
-      step="1 of 4"
+      step={1}
       title="What's the link to your blog?"
-      description="We'll verify the site and find your Ghost admin panel."
     >
-      <BlogStep defaultValue={account.blogHost ?? "https://contraption.co/"} />
+      <BlogStep defaultValue={account.blogHost} />
     </OnboardingShell>
   );
 }

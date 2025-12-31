@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { Settings } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -57,9 +57,12 @@ export function AuthControls() {
     <div className="flex items-center gap-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="rounded-full px-4">
-            <Settings className="h-4 w-4" />
-            <span className="text-xs font-semibold">Settings</span>
+          <Button
+            variant="ghost"
+            className="h-10 w-10 rounded-full p-0"
+            aria-label="Open settings"
+          >
+            <CircleUserRound className="h-5 w-5" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -68,11 +71,15 @@ export function AuthControls() {
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/settings">Settings</Link>
+            <Link href="/settings" className="no-underline">
+              Settings
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/api/auth/logout">Log out</Link>
+            <Link href="/api/auth/logout" className="no-underline">
+              Log out
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

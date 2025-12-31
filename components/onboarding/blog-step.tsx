@@ -8,8 +8,6 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const schema = z.object({
   blogUrl: z.string().min(1, "Blog URL is required")
@@ -17,12 +15,12 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export function BlogStep({ defaultValue }: { defaultValue: string }) {
+export function BlogStep({ defaultValue }: { defaultValue?: string | null }) {
   const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      blogUrl: defaultValue
+      blogUrl: defaultValue ?? ""
     }
   });
 
@@ -52,10 +50,11 @@ export function BlogStep({ defaultValue }: { defaultValue: string }) {
       }
     >
       <div className="space-y-2">
-        <Label htmlFor="blogUrl">Blog URL</Label>
         <Input
           id="blogUrl"
           placeholder="https://contraption.co"
+          aria-label="Blog URL"
+          autoFocus
           {...form.register("blogUrl")}
         />
         {form.formState.errors.blogUrl ? (
@@ -69,13 +68,10 @@ export function BlogStep({ defaultValue }: { defaultValue: string }) {
         <p className="text-sm text-red">{mutation.error.message}</p>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-3">
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? "Verifying..." : "Continue"}
         </Button>
-        {mutation.isPending ? (
-          <Skeleton className="h-10 w-40 rounded-full" />
-        ) : null}
       </div>
     </form>
   );

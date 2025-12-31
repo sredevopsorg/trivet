@@ -12,7 +12,7 @@ import {
   findMemberByEmail
 } from "@/lib/ghost";
 import { exchangeCodeForTokens, verifyIdToken } from "@/lib/google";
-import { ensureSafeRedirect } from "@/lib/url";
+import { ensureSafeRedirect, getPublicBaseUrl } from "@/lib/url";
 
 async function handleOwnerSignIn({
   email,
@@ -121,7 +121,9 @@ async function handleMemberSignIn({
 }
 
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
+  const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
+  const origin = new URL(baseUrl).origin;
   const code = searchParams.get("code");
   const stateToken = searchParams.get("state");
 
@@ -205,10 +207,7 @@ export async function GET(request: NextRequest) {
       throw new Error("Token audience mismatch");
     }
 
-    const redirect = ensureSafeRedirect(
-      state.redirect ?? null,
-      process.env.TRIVET_PUBLIC_BASE_URL ?? origin
-    );
+    const redirect = ensureSafeRedirect(state.redirect ?? null, origin);
 
     const signInUrl = await handleMemberSignIn({
       accountUuid: state.accountUuid,
@@ -217,10 +216,7 @@ export async function GET(request: NextRequest) {
       redirect
     });
 
-    const validatedSignIn = ensureSafeRedirect(
-      signInUrl,
-      process.env.TRIVET_PUBLIC_BASE_URL ?? origin
-    );
+    const validatedSignIn = ensureSafeRedirect(signInUrl, origin);
 
     return NextResponse.redirect(validatedSignIn ?? signInUrl);
   } catch (error) {
@@ -235,6 +231,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
+  const origin = new URL(baseUrl).origin;
   try {
     const body = (await request.json()) as {
       credential?: string;
@@ -294,10 +292,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
     }
 
-    const redirect = ensureSafeRedirect(
-      body.redirect ?? null,
-      process.env.TRIVET_PUBLIC_BASE_URL ?? request.nextUrl.origin
-    );
+    const redirect = ensureSafeRedirect(body.redirect ?? null, origin);
 
     const signInUrl = await handleMemberSignIn({
       accountUuid: body.accountUuid,
@@ -306,10 +301,7 @@ export async function POST(request: NextRequest) {
       redirect
     });
 
-    const validatedSignIn = ensureSafeRedirect(
-      signInUrl,
-      process.env.TRIVET_PUBLIC_BASE_URL ?? request.nextUrl.origin
-    );
+    const validatedSignIn = ensureSafeRedirect(signInUrl, origin);
 
     return NextResponse.json({
       signInUrl: validatedSignIn ?? signInUrl

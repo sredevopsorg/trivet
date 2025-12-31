@@ -23,7 +23,10 @@ export async function POST(request: NextRequest) {
 
   try {
     const blogHost = normalizeBlogHost(body.data.blogUrl);
-    const blogResponse = await fetch(blogHost, { method: "GET" });
+    const blogResponse = await fetch(blogHost, {
+      method: "GET",
+      redirect: "follow"
+    });
     if (!blogResponse.ok) {
       return NextResponse.json(
         { error: "Blog did not respond with 200" },
@@ -31,23 +34,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const ghostUrl = new URL("/ghost/", blogHost);
+    const resolvedBlogHost = new URL(blogResponse.url).origin;
+    const ghostUrl = new URL("/ghost/", resolvedBlogHost);
     const ghostResponse = await fetch(ghostUrl.toString(), {
       method: "GET",
       redirect: "manual"
     });
 
-    let adminHost = blogHost;
+    let adminHost = resolvedBlogHost;
     const redirectLocation = ghostResponse.headers.get("location");
     if (redirectLocation) {
-      const redirectUrl = new URL(redirectLocation, blogHost);
+      const redirectUrl = new URL(redirectLocation, resolvedBlogHost);
       adminHost = redirectUrl.origin;
     }
 
     const account = await prisma.account.update({
       where: { id: session.accountId },
       data: {
-        blogHost,
+        blogHost: resolvedBlogHost,
         adminHost
       }
     });

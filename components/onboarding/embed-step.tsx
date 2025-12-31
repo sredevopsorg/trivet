@@ -51,11 +51,13 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="one-tap">
-        <TabsList>
-          <TabsTrigger value="one-tap">One Tap (custom required)</TabsTrigger>
-          <TabsTrigger value="link">Link / Href</TabsTrigger>
-          <TabsTrigger value="theme">Theme template</TabsTrigger>
-        </TabsList>
+        <div className="flex justify-center">
+          <TabsList>
+            <TabsTrigger value="one-tap">One Tap (custom required)</TabsTrigger>
+            <TabsTrigger value="link">Link / Href</TabsTrigger>
+            <TabsTrigger value="theme">Theme template</TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="one-tap" className="space-y-4">
           {canUseOneTap ? (
@@ -124,9 +126,11 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
         </TabsContent>
       </Tabs>
 
-      <Button asChild>
-        <Link href="/dashboard">Done</Link>
-      </Button>
+      <div className="flex justify-center">
+        <Button asChild>
+          <Link href="/dashboard">Done</Link>
+        </Button>
+      </div>
     </div>
   );
 }

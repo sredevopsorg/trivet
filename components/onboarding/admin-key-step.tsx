@@ -9,8 +9,6 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const schema = z.object({
   adminApiKey: z
@@ -20,12 +18,18 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export function AdminKeyStep({ adminHost }: { adminHost: string }) {
+export function AdminKeyStep({
+  adminHost,
+  defaultValue
+}: {
+  adminHost: string;
+  defaultValue?: string | null;
+}) {
   const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      adminApiKey: ""
+      adminApiKey: defaultValue ?? ""
     }
   });
 
@@ -56,26 +60,31 @@ export function AdminKeyStep({ adminHost }: { adminHost: string }) {
         void form.handleSubmit((values) => mutation.mutate(values))(event)
       }
     >
-      <div className="space-y-2 rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700">
-        <p>
-          Create a new Ghost integration called <strong>Trivet</strong>, then
-          paste the Admin API key here.
-        </p>
-        <a
-          href={integrationLink}
-          target="_blank"
-          rel="noreferrer"
-          className="font-semibold"
-        >
-          Open Ghost Integrations
-        </a>
+      <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700">
+        <ol className="list-decimal space-y-2 pl-4">
+          <li>
+            <a
+              href={integrationLink}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold"
+            >
+              Open your Ghost integrations →
+            </a>
+          </li>
+          <li>
+            Create a new integration called <strong>Trivet</strong>.
+          </li>
+          <li>Paste the <strong>Admin API key</strong> here.</li>
+        </ol>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="adminApiKey">Admin API Key</Label>
         <Input
           id="adminApiKey"
           placeholder="0123456789abcdef01234567:012345..."
+          aria-label="Admin API key"
+          autoFocus
           {...form.register("adminApiKey")}
         />
         {form.formState.errors.adminApiKey ? (
@@ -89,16 +98,13 @@ export function AdminKeyStep({ adminHost }: { adminHost: string }) {
         <p className="text-sm text-red">{mutation.error.message}</p>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-3">
         <Button variant="ghost" asChild>
           <Link href="/onboarding/blog">Back</Link>
         </Button>
         <Button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? "Testing..." : "Continue"}
         </Button>
-        {mutation.isPending ? (
-          <Skeleton className="h-10 w-40 rounded-full" />
-        ) : null}
       </div>
     </form>
   );

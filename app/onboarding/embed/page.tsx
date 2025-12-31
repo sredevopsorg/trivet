@@ -26,9 +26,8 @@ export default async function EmbedOnboardingPage() {
 
   return (
     <OnboardingShell
-      step="4 of 4"
+      step={4}
       title="Add sign-in to your website"
-      description="Pick the integration method that best fits your Ghost setup."
     >
       <EmbedStep baseUrl={baseUrl} />
     </OnboardingShell>
