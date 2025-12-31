@@ -11,7 +11,7 @@ export function Footer() {
         <a href="https://www.contraption.co/terms" target="_blank" rel="noreferrer">
           Terms
         </a>
-        {" · "}
+        {" & "}
         <a
           href="https://www.contraption.co/privacy"
           target="_blank"
