@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 
 import {
   Dialog,
@@ -149,7 +148,6 @@ export function HomeHero({
               className="inline-flex items-center gap-1 underline decoration-gray-400 underline-offset-4"
             >
               Ghost
-              <ArrowUpRight className="h-4 w-4" />
             </a>
             ?
           </p>
