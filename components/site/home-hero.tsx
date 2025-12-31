@@ -171,11 +171,11 @@ export function HomeHero({
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Trivet isn&apos;t for you</DialogTitle>
-                  <DialogDescription>
-                    Trivet only helps Ghost publishers add Google sign-in. If you
-                    need anything else, Contraption can help.
-                  </DialogDescription>
+                <DialogTitle>Check out my other projects</DialogTitle>
+                <DialogDescription>
+                  Trivet is just one thing I&apos;ve built. If you&apos;re looking for
+                  something else, there&apos;s more to explore.
+                </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                   <Button asChild>
@@ -184,7 +184,7 @@ export function HomeHero({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Visit Contraption
+                      See other projects
                     </a>
                   </Button>
                 </DialogFooter>
