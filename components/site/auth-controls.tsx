@@ -47,7 +47,7 @@ export function AuthControls() {
     return (
       <div className="flex items-center gap-3">
         <Button asChild>
-          <Link href="/api/auth/google?flow=owner">Sign up with Google</Link>
+          <Link href="/api/auth/google?flow=owner">Sign up</Link>
         </Button>
       </div>
     );

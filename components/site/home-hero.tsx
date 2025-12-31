@@ -135,7 +135,21 @@ export function HomeHero({
             Account deleted. You have been signed out.
           </div>
         ) : null}
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl">
+        <div className="flex justify-center">
+          <a
+            href="https://github.com/contraptionco/trivet"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center"
+          >
+            <img
+              src="https://img.shields.io/github/stars/contraptionco/trivet?style=social"
+              alt="GitHub stars"
+              className="h-5"
+            />
+          </a>
+        </div>
+        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl">
           Free Google sign-in for Ghost blogs
         </h1>
         <div className="mt-10 flex flex-col items-center gap-3">

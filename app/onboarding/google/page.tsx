@@ -21,11 +21,7 @@ export default async function GoogleOnboardingPage() {
   const baseUrl =
     process.env.TRIVET_PUBLIC_BASE_URL ?? `${protocol}://${host}`;
 
-  const defaultMode = account.googleOauthConfigured
-    ? account.googleOauthClientId
-      ? "custom"
-      : "trivet"
-    : "custom";
+  const defaultMode = "custom";
   const blogOrigin = account.blogHost ?? baseUrl;
 
   return (

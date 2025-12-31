@@ -53,11 +53,11 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
       <Tabs defaultValue="one-tap">
         <div className="flex justify-center">
           <TabsList>
-            <TabsTrigger value="one-tap">One Tap (custom required)</TabsTrigger>
-            <TabsTrigger value="link">Link / Href</TabsTrigger>
-            <TabsTrigger value="theme">Theme template</TabsTrigger>
-          </TabsList>
-        </div>
+          <TabsTrigger value="one-tap">One Tap</TabsTrigger>
+          <TabsTrigger value="link">Link</TabsTrigger>
+          <TabsTrigger value="theme">Theme template</TabsTrigger>
+        </TabsList>
+      </div>
 
         <TabsContent value="one-tap" className="space-y-4">
           {canUseOneTap ? (
@@ -76,7 +76,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
                   Open Ghost Code Injection
                 </a>
               ) : null}
-              <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700">
+              <pre className="whitespace-pre-wrap break-words rounded-2xl border border-gray-100 bg-gray-050 p-4 font-mono text-xs text-gray-700">
                 <code>{embedScript}</code>
               </pre>
             </>
@@ -100,7 +100,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
           <p className="text-xs text-gray-500">
             Note: Ghost Navigation cannot hide links for logged-in members.
           </p>
-          <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700">
+          <pre className="whitespace-pre-wrap break-words rounded-2xl border border-gray-100 bg-gray-050 p-4 font-mono text-xs text-gray-700">
             <code>{linkUrl}</code>
           </pre>
         </TabsContent>
@@ -110,7 +110,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
             Hide the button for logged-in members using Ghost&apos;s @member
             conditional.
           </p>
-          <pre className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-xs text-gray-700">
+          <pre className="whitespace-pre-wrap break-words rounded-2xl border border-gray-100 bg-gray-050 p-4 font-mono text-xs text-gray-700">
             <code>{themeSnippet}</code>
           </pre>
           <p className="text-xs text-gray-500">

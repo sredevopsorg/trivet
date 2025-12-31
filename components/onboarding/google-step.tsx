@@ -133,7 +133,7 @@ export function GoogleStep({
           ) : (
             <div className="rounded-2xl border border-gray-100 bg-gray-050 p-4 text-sm text-gray-700">
               Use Trivet&apos;s Google app for basic sign-in links. One Tap
-              requires your own Google OAuth app.
+              sign-in is not supported with this setup.
             </div>
           )}
         </TabsContent>
@@ -158,6 +158,9 @@ export function GoogleStep({
                   </li>
                   <li className="space-y-3">
                     Add the following values:
+                    <p className="text-sm text-gray-600">
+                      Copy and paste the fields below.
+                    </p>
                     <div className="space-y-3 pt-2">
                       <div className="space-y-1">
                         <div className="text-xs font-semibold text-gray-600">

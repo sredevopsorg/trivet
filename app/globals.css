@@ -20,6 +20,24 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: "TX-02-Data";
+  src: url("https://fonts.contraption.co/TX-02/TX-02-Data-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "TX-02-Data";
+  src: url("https://fonts.contraption.co/TX-02/TX-02-Data-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
 html,
 body {
   scroll-behavior: smooth;
