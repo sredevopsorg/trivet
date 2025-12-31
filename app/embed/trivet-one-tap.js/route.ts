@@ -105,6 +105,7 @@ export async function GET(request: NextRequest) {
     window.google.accounts.id.initialize({
       client_id: GOOGLE_CLIENT_ID,
       auto_select: true,
+      cancel_on_tap_outside: false,
       callback: async (response) => {
         if (!response || !response.credential) return;
         try {

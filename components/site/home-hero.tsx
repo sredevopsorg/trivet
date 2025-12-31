@@ -94,6 +94,7 @@ export function HomeHero({
         window.google.accounts.id.initialize({
           client_id: googleClientId,
           auto_select: false,
+          cancel_on_tap_outside: false,
           callback: (response) => {
             void handleCredential(response);
           }
