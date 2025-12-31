@@ -139,7 +139,7 @@ export function HomeHero({
           Free Google sign-in for Ghost blogs
         </h1>
         <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-xl font-semibold text-gray-900 dark:text-gray-050 sm:text-2xl">
+          <p className="text-xl font-semibold text-gray-800 dark:text-gray-200 sm:text-2xl">
             Do you use{" "}
             <a
               href="https://ghost.org"
