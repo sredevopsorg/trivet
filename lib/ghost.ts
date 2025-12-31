@@ -66,7 +66,7 @@ async function createGhostAdminToken(adminApiKey: string) {
 
 export async function findMemberByEmail(api: GhostAdminClient, email: string) {
   const members = await api.members.browse({
-    filter: `email:\"${email}\"`,
+    filter: `email:'${email}'`,
     limit: 1
   });
 
