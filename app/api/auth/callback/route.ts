@@ -14,6 +14,19 @@ import {
 import { exchangeCodeForTokens, verifyIdToken } from "@/lib/google";
 import { ensureSafeRedirect, getPublicBaseUrl } from "@/lib/url";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
+
+function applyCors(response: NextResponse) {
+  for (const [key, value] of Object.entries(corsHeaders)) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
+
 async function handleOwnerSignIn({
   email,
   name
@@ -236,7 +249,9 @@ export async function POST(request: NextRequest) {
     };
 
     if (!body.credential || !body.flow) {
-      return NextResponse.json({ error: "Missing credential" }, { status: 400 });
+      return applyCors(
+        NextResponse.json({ error: "Missing credential" }, { status: 400 })
+      );
     }
 
     const userInfo = await verifyIdToken(body.credential);
@@ -244,7 +259,9 @@ export async function POST(request: NextRequest) {
     if (body.flow === "owner") {
       const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
       if (clientId && userInfo.aud && userInfo.aud !== clientId) {
-        return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
+        return applyCors(
+          NextResponse.json({ error: "Invalid audience" }, { status: 401 })
+        );
       }
 
       const account = await handleOwnerSignIn({
@@ -260,11 +277,13 @@ export async function POST(request: NextRequest) {
         email: account.email,
         name: account.name
       });
-      return response;
+      return applyCors(response);
     }
 
     if (!body.accountUuid) {
-      return NextResponse.json({ error: "Missing account" }, { status: 400 });
+      return applyCors(
+        NextResponse.json({ error: "Missing account" }, { status: 400 })
+      );
     }
 
     const account = await prisma.account.findUnique({
@@ -275,15 +294,19 @@ export async function POST(request: NextRequest) {
       account?.googleOauthClientId && account?.googleOauthClientSecret
     );
     if (!useCustom) {
-      return NextResponse.json(
-        { error: "Custom Google OAuth is required for One Tap" },
-        { status: 400 }
+      return applyCors(
+        NextResponse.json(
+          { error: "Custom Google OAuth is required for One Tap" },
+          { status: 400 }
+        )
       );
     }
 
     const clientId = account?.googleOauthClientId;
     if (clientId && userInfo.aud && userInfo.aud !== clientId) {
-      return NextResponse.json({ error: "Invalid audience" }, { status: 401 });
+      return applyCors(
+        NextResponse.json({ error: "Invalid audience" }, { status: 401 })
+      );
     }
 
     const signInUrl = await handleMemberSignIn({
@@ -294,11 +317,22 @@ export async function POST(request: NextRequest) {
 
     const validatedSignIn = ensureSafeRedirect(signInUrl, origin);
 
-    return NextResponse.json({
-      signInUrl: validatedSignIn ?? signInUrl
-    });
+    return applyCors(
+      NextResponse.json({
+        signInUrl: validatedSignIn ?? signInUrl
+      })
+    );
   } catch (error) {
     console.error("One Tap sign-in failed", error);
-    return NextResponse.json({ error: "Unable to sign in" }, { status: 500 });
+    return applyCors(
+      NextResponse.json({ error: "Unable to sign in" }, { status: 500 })
+    );
   }
+}
+
+export function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders
+  });
 }

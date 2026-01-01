@@ -40,7 +40,7 @@ export function EmbedStep({ baseUrl }: { baseUrl: string }) {
     ? `${data.adminHost.replace(/\/$/, "")}/ghost/#/settings/code-injection`
     : "";
 
-  const embedScript = `<script src=\"${baseUrl}/embed/trivet-one-tap.js?account=${data.uuid}&v=1\"></script>`;
+  const embedScript = `<script async src=\"${baseUrl}/embed/trivet-one-tap.js?account=${data.uuid}&v=1\"></script>`;
   const linkUrl = `${baseUrl}/sign-in/${data.uuid}`;
   const themeSnippet = `{{#if @member}}
   {{!-- Member already logged in --}}
