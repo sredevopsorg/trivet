@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { Pencil } from "lucide-react";
 import {
-  Bar,
-  BarChart,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -21,6 +21,10 @@ interface AnalyticsPoint {
   date: string;
   new: number;
   returning: number;
+}
+
+interface ChartPoint extends AnalyticsPoint {
+  total: number;
 }
 
 interface AccountResponse {
@@ -54,9 +58,10 @@ export function DashboardClient() {
     }
   });
 
-  const hasAnalytics =
-    analyticsQuery.data?.some((point) => point.new > 0 || point.returning > 0) ??
-    false;
+  const chartData = analyticsQuery.data
+    ? buildChartData(analyticsQuery.data)
+    : null;
+  const hasAnalytics = chartData?.some((point) => point.total > 0) ?? false;
 
   const configItems = [
     {
@@ -96,27 +101,30 @@ export function DashboardClient() {
             <div className="text-sm font-semibold">Sign-ins per day</div>
             {analyticsQuery.isLoading ? (
               <Skeleton className="mt-4 h-64 w-full rounded-3xl" />
-            ) : analyticsQuery.data ? (
-              hasAnalytics ? (
+            ) : chartData ? (
+              <>
                 <div className="mt-4 h-64">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={analyticsQuery.data} margin={{ top: 10 }}>
+                    <LineChart data={chartData} margin={{ top: 10 }}>
                       <XAxis dataKey="date" tick={{ fontSize: 12 }} />
                       <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
                       <Tooltip content={<AnalyticsTooltip />} cursor={false} />
-                      <Bar dataKey="new" name="New" stackId="a" fill="#111111" />
-                      <Bar
-                        dataKey="returning"
-                        name="Returning"
-                        stackId="a"
-                        fill="#B1B1B1"
+                      <Line
+                        type="linear"
+                        dataKey="total"
+                        name="Sign-ins"
+                        stroke="#111111"
+                        strokeWidth={2}
+                        dot={{ r: 4, fill: "#111111", strokeWidth: 0 }}
+                        activeDot={{ r: 5, fill: "#111111", strokeWidth: 0 }}
                       />
-                    </BarChart>
+                    </LineChart>
                   </ResponsiveContainer>
                 </div>
-              ) : (
-                <p className="mt-4 text-sm text-gray-500">No sign-ins yet.</p>
-              )
+                {!hasAnalytics ? (
+                  <p className="mt-4 text-sm text-gray-500">No sign-ins yet.</p>
+                ) : null}
+              </>
             ) : (
               <p className="mt-4 text-sm text-red">Unable to load analytics.</p>
             )}
@@ -206,4 +214,40 @@ function AnalyticsTooltip({
       </div>
     </div>
   );
+}
+
+function buildChartData(points: AnalyticsPoint[]): ChartPoint[] {
+  const normalized = points.map((point) => ({
+    ...point,
+    total: point.new + point.returning
+  }));
+
+  if (normalized.length >= 7) {
+    return normalized;
+  }
+
+  const byDate = new Map<string, ChartPoint>();
+  for (const point of normalized) {
+    byDate.set(point.date, point);
+  }
+
+  const now = new Date();
+  const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const result: ChartPoint[] = [];
+
+  for (let offset = 6; offset >= 0; offset -= 1) {
+    const day = new Date(end);
+    day.setUTCDate(end.getUTCDate() - offset);
+    const key = day.toISOString().split("T")[0];
+    result.push(
+      byDate.get(key) ?? {
+        date: key,
+        new: 0,
+        returning: 0,
+        total: 0
+      }
+    );
+  }
+
+  return result;
 }
