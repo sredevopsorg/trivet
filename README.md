@@ -1,6 +1,13 @@
+<div align="center">
+  <a href="https://trivet.contraption.co">
+    <img src="public/wordmark.svg" alt="Trivet" width="200">
+  </a>
+  <br /><br />
+</div>
+
 # Trivet
 
-Trivet is an open-source Next.js service that lets Ghost publishers offer “Sign in with Google” for members. The hosted service runs at https://trivet.contraption.co.
+Trivet is an open-source Next.js service that lets Ghost publishers offer “Sign in with Google” for members. Sign up for the free hosted service at [trivet.contraption.co](https://trivet.contraption.co)
 
 ## Features
 
