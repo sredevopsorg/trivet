@@ -29,10 +29,12 @@ function applyCors(response: NextResponse) {
 
 async function handleOwnerSignIn({
   email,
-  name
+  name,
+  shouldSendJunkDrawer
 }: {
   email: string;
   name?: string;
+  shouldSendJunkDrawer: boolean;
 }) {
   const existing = await prisma.account.findUnique({ where: { email } });
   if (existing) {
@@ -51,19 +53,21 @@ async function handleOwnerSignIn({
     }
   });
 
-  void fetch("https://junk-drawer-api.contraption.co/newsletter/subscribe", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email,
-      name,
-      source: "trivet"
-    })
-  }).catch((error) => {
-    console.error("Junk Drawer subscribe failed", error);
-  });
+  if (shouldSendJunkDrawer) {
+    void fetch("https://junk-drawer-api.contraption.co/newsletter/subscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        name,
+        source: "trivet"
+      })
+    }).catch((error) => {
+      console.error("Junk Drawer subscribe failed", error);
+    });
+  }
 
   return account;
 }
@@ -134,6 +138,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
   const origin = new URL(baseUrl).origin;
+  const shouldSendJunkDrawer = origin === "https://trivet.contraption.co";
   const code = searchParams.get("code");
   const stateToken = searchParams.get("state");
 
@@ -169,7 +174,8 @@ export async function GET(request: NextRequest) {
 
       const account = await handleOwnerSignIn({
         email: userInfo.email,
-        name: userInfo.name
+        name: userInfo.name,
+        shouldSendJunkDrawer
       });
 
       const response = NextResponse.redirect(
@@ -240,6 +246,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
   const origin = new URL(baseUrl).origin;
+  const shouldSendJunkDrawer = origin === "https://trivet.contraption.co";
   try {
     const body = (await request.json()) as {
       credential?: string;
@@ -266,7 +273,8 @@ export async function POST(request: NextRequest) {
 
       const account = await handleOwnerSignIn({
         email: userInfo.email,
-        name: userInfo.name
+        name: userInfo.name,
+        shouldSendJunkDrawer
       });
 
       const response = NextResponse.json({
