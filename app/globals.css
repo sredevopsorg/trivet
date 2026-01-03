@@ -58,3 +58,9 @@ body {
 a {
   @apply underline decoration-gray-200 underline-offset-4 hover:decoration-gray-400;
 }
+
+@layer components {
+  .content-container {
+    @apply mx-auto w-full max-w-6xl px-6;
+  }
+}

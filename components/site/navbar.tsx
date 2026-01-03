@@ -14,7 +14,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 bg-gray-050">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="content-container flex h-16 items-center justify-between">
         <Logo />
         <AuthControls />
       </div>

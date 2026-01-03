@@ -75,6 +75,11 @@ export function AuthControls() {
               Settings
             </Link>
           </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <a href="mailto:trivet@contraption.co" className="no-underline">
+              Support
+            </a>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link href="/api/auth/logout" className="no-underline">

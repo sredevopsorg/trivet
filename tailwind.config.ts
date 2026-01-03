@@ -118,7 +118,6 @@ const config: Config = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/container-queries"),
     require("tailwindcss-flip"),
-    require("@tailwindcss/line-clamp"),
     fontVariationSettingsPlugin
   ]
 };

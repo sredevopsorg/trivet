@@ -124,91 +124,93 @@ export function HomeHero({
   }, [toast]);
 
   return (
-    <section className="flex flex-1 items-center justify-center px-6 py-16">
-      <div className="max-w-2xl text-center">
-        {showToast ? (
-          <div
-            role="status"
-            aria-live="polite"
-            className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900"
-          >
-            Account deleted. You have been signed out.
-          </div>
-        ) : null}
-        <div className="flex justify-center">
-          <a
-            href="https://github.com/contraptionco/trivet"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://img.shields.io/github/stars/contraptionco/trivet?style=social"
-              alt="GitHub stars"
-              width="98"
-              height="20"
-              className="h-5 w-auto"
-            />
-          </a>
-        </div>
-        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-950 text-pretty sm:text-5xl">
-          Free Google sign-in for Ghost blogs
-        </h1>
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-xl font-semibold text-gray-800 sm:text-2xl">
-            Do you use{" "}
+    <section className="flex flex-1 items-center justify-center py-16">
+      <div className="content-container">
+        <div className="mx-auto max-w-2xl text-center">
+          {showToast ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="fixed bottom-6 right-6 z-50 rounded-2xl border border-green/30 bg-white px-4 py-3 text-sm text-gray-900"
+            >
+              Account deleted. You have been signed out.
+            </div>
+          ) : null}
+          <div className="flex justify-center">
             <a
-              href="https://ghost.org"
+              href="https://github.com/contraptionco/trivet"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 underline decoration-gray-400 underline-offset-4"
+              className="inline-flex items-center"
             >
-              Ghost
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://img.shields.io/github/stars/contraptionco/trivet?style=social"
+                alt="GitHub stars"
+                width="98"
+                height="20"
+                className="h-5 w-auto"
+              />
             </a>
-            ?
-          </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            {oneTapReady || Boolean(oneTapError) || !googleClientId ? (
-              <Button asChild size="lg" disabled={signingIn}>
-                <Link href="/api/auth/google?flow=owner">
-                  {signingIn ? "Signing you in..." : "Yes, sign up"}
-                </Link>
-              </Button>
-            ) : (
-              <Skeleton className="h-12 w-40 rounded-full" />
-            )}
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="lg">
-                  No
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Check out my other projects</DialogTitle>
-                  <DialogDescription>
-                    I write about crafting digital tools and build projects. There&apos;s more to explore:
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="items-start sm:justify-start">
-                  <Button asChild>
-                    <a
-                      href="https://www.contraption.co"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Go to contraption.co &rarr;
-                    </a>
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
           </div>
-          {oneTapError ? (
-            <p className="text-xs text-red">{oneTapError}</p>
-          ) : null}
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gray-950 text-pretty display sm:text-5xl">
+            Free Google sign-in for Ghost blogs
+          </h1>
+          <div className="mt-10 flex flex-col items-center gap-3">
+            <p className="text-xl font-semibold text-gray-800 display sm:text-2xl">
+              Do you use{" "}
+              <a
+                href="https://ghost.org"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 underline decoration-gray-400 underline-offset-4"
+              >
+                Ghost
+              </a>
+              ?
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              {oneTapReady || Boolean(oneTapError) || !googleClientId ? (
+                <Button asChild size="lg" disabled={signingIn}>
+                  <Link href="/api/auth/google?flow=owner">
+                    {signingIn ? "Signing you in..." : "Yes, sign up"}
+                  </Link>
+                </Button>
+              ) : (
+                <Skeleton className="h-12 w-40 rounded-full" />
+              )}
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="lg">
+                    No
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Check out my other projects</DialogTitle>
+                    <DialogDescription>
+                      I write about crafting digital tools and build projects. There&apos;s more to explore:
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="items-start sm:justify-start">
+                    <Button asChild>
+                      <a
+                        href="https://www.contraption.co"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Go to contraption.co &rarr;
+                      </a>
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+            {oneTapError ? (
+              <p className="text-xs text-red">{oneTapError}</p>
+            ) : null}
+          </div>
         </div>
       </div>
     </section>

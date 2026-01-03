@@ -94,78 +94,76 @@ export function DashboardClient() {
   ];
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-12">
-      <div className="w-full max-w-4xl space-y-12 text-center">
+    <main className="min-h-[calc(100vh-4rem)] py-12">
+      <div className="content-container space-y-12 text-left">
         <section className="space-y-4">
-          <div className="rounded-3xl border border-gray-100 bg-white p-6 text-left shadow-sm">
-            <div className="text-sm font-semibold">Sign-ins per day</div>
-            {analyticsQuery.isLoading ? (
-              <Skeleton className="mt-4 h-64 w-full rounded-3xl" />
-            ) : chartData ? (
-              <>
-                <div className="mt-4 h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={chartData} margin={{ top: 10 }}>
-                      <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                      <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
-                      <Tooltip content={<AnalyticsTooltip />} cursor={false} />
-                      <Line
-                        type="linear"
-                        dataKey="total"
-                        name="Sign-ins"
-                        stroke="#111111"
-                        strokeWidth={2}
-                        dot={{ r: 4, fill: "#111111", strokeWidth: 0 }}
-                        activeDot={{ r: 5, fill: "#111111", strokeWidth: 0 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                {!hasAnalytics ? (
-                  <p className="mt-4 text-sm text-gray-500">No sign-ins yet.</p>
-                ) : null}
-              </>
-            ) : (
-              <p className="mt-4 text-sm text-red">Unable to load analytics.</p>
-            )}
-          </div>
+          <div className="text-sm font-semibold">Sign-ins per day</div>
+          {analyticsQuery.isLoading ? (
+            <Skeleton className="mt-4 h-64 w-full rounded-3xl" />
+          ) : chartData ? (
+            <>
+              <div className="mt-4 h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData} margin={{ top: 10 }}>
+                    <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
+                    <Tooltip content={<AnalyticsTooltip />} cursor={false} />
+                    <Line
+                      type="linear"
+                      dataKey="total"
+                      name="Sign-ins"
+                      stroke="#111111"
+                      strokeWidth={2}
+                      dot={{ r: 4, fill: "#111111", strokeWidth: 0 }}
+                      activeDot={{ r: 5, fill: "#111111", strokeWidth: 0 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              {!hasAnalytics ? (
+                <p className="mt-4 text-sm text-gray-500">No sign-ins yet.</p>
+              ) : null}
+            </>
+          ) : (
+            <p className="mt-4 text-sm text-red">Unable to load analytics.</p>
+          )}
         </section>
 
         <section className="space-y-6">
-          <div className="rounded-3xl border border-gray-100 bg-white p-6 text-left shadow-sm">
-            <div className="text-sm font-semibold">Configuration</div>
-            {accountQuery.isLoading ? (
-              <div className="mt-6 space-y-3">
-                <Skeleton className="h-4 w-40" />
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-4 w-24" />
-              </div>
-            ) : accountQuery.data ? (
-              <div className="mt-6 space-y-5">
-                {configItems.map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex flex-wrap items-center justify-between gap-4"
-                  >
-                    <div className="space-y-1">
-                      <div className="text-xs uppercase tracking-[0.2em] text-gray-400">
-                        {item.label}
-                      </div>
-                      <div className="text-sm text-gray-900">{item.value}</div>
+          <div className="text-sm font-semibold">Configuration</div>
+          {accountQuery.isLoading ? (
+            <div className="mt-6 space-y-3">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+          ) : accountQuery.data ? (
+            <div className="mt-6 space-y-5">
+              {configItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex flex-wrap items-center justify-between gap-4"
+                >
+                  <div className="space-y-1">
+                    <div className="text-sm font-medium text-gray-500">
+                      {item.label}
                     </div>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={item.href} className="no-underline">
-                        <Pencil className="h-3 w-3" />
-                        {item.action}
-                      </Link>
-                    </Button>
+                    <div className="text-sm font-mono text-gray-900">
+                      {item.value}
+                    </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="mt-6 text-sm text-red">Unable to load configuration.</p>
-            )}
-          </div>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={item.href} className="no-underline">
+                      <Pencil className="h-3 w-3" />
+                      {item.action}
+                    </Link>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-6 text-sm text-red">Unable to load configuration.</p>
+          )}
         </section>
 
         <div className="flex justify-center pt-4">
@@ -198,19 +196,23 @@ function AnalyticsTooltip({
     return null;
   }
 
+  const point = payload[0]?.payload as ChartPoint | undefined;
+  if (!point) {
+    return null;
+  }
+
   return (
     <div className="rounded-2xl border border-gray-100 bg-white px-3 py-2 text-xs text-gray-700 shadow-sm">
       <div className="mb-1 text-gray-500">{label}</div>
       <div className="space-y-1">
-        {payload.map((entry) => (
-          <div
-            key={`${entry.dataKey ?? entry.name}`}
-            className="flex items-center justify-between gap-4"
-          >
-            <span>{entry.name ?? entry.dataKey}</span>
-            <span className="font-semibold text-gray-900">{entry.value}</span>
-          </div>
-        ))}
+        <div className="flex items-center justify-between gap-4">
+          <span>New users</span>
+          <span className="font-semibold text-gray-900">{point.new}</span>
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <span>Returning users</span>
+          <span className="font-semibold text-gray-900">{point.returning}</span>
+        </div>
       </div>
     </div>
   );
