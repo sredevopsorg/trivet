@@ -31,15 +31,15 @@ model Account {
 }
 
 model Login {
-  id          Int       @id @default(autoincrement())
-  accountId   Int       @map("account_id")
-  memberEmail String    @map("member_email")
-  type        LoginType
-  createdAt   DateTime  @default(now()) @map("created_at")
+  id              Int       @id @default(autoincrement())
+  accountId       Int       @map("account_id")
+  memberEmailHash String    @map("member_email_hash")
+  type            LoginType
+  createdAt       DateTime  @default(now()) @map("created_at")
 
   account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@index([accountId, createdAt])
-  @@index([accountId, memberEmail])
+  @@index([accountId, memberEmailHash])
   @@map("logins")
 }

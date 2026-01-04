@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { Prisma } from "@prisma/client";
 
 import { verifyAuthState } from "@/lib/auth-state";
 import { setSessionCookie } from "@/lib/auth";
@@ -25,6 +26,18 @@ function applyCors(response: NextResponse) {
     response.headers.set(key, value);
   }
   return response;
+}
+
+async function getMemberEmailHash(email: string) {
+  const [row] = await prisma.$queryRaw<{ hash: string }[]>(
+    Prisma.sql`SELECT md5(lower(trim(${email}))) AS hash`
+  );
+
+  if (!row?.hash) {
+    throw new Error("Failed to hash member email");
+  }
+
+  return row.hash;
 }
 
 async function handleOwnerSignIn({
@@ -123,10 +136,11 @@ async function handleMemberSignIn({
     memberId: member.id
   });
 
+  const memberEmailHash = await getMemberEmailHash(email);
   await prisma.login.create({
     data: {
       accountId: account.id,
-      memberEmail: email,
+      memberEmailHash,
       type: loginType
     }
   });
