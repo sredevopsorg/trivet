@@ -26,7 +26,7 @@
     "@tryghost/admin-api": "^1.14.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "jose": "^5.9.2",
+    "jose": "^6.0.0",
     "lucide-react": "^0.562.0",
     "next": "^14.2.5",
     "react": "^18.2.0",
