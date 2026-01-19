@@ -3,7 +3,5 @@
   "extends": [
     "config:recommended"
   ],
-  "bumpVersion": [
-    "minor"
-  ]
+  "bumpVersion": "minor"
 }
