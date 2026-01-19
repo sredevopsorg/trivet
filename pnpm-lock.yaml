@@ -34,7 +34,7 @@ importers:
         version: 5.90.16(react@18.3.1)
       '@tryghost/admin-api':
         specifier: ^1.14.3
-        version: 1.14.3
+        version: 1.14.4
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -693,8 +693,8 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@tryghost/admin-api@1.14.3':
-    resolution: {integrity: sha512-VGaecf3WiRiBzl7XfG5+/1Tve6GBnuY/DXktDWRdomeJbhWL/BkmhtLmgVhwZzuuH0D8H9NDr+zAhyIlSGdbTA==}
+  '@tryghost/admin-api@1.14.4':
+    resolution: {integrity: sha512-rs7SlEo9InJQoxmUzY0siZQ0uRxTzKBhLj7Rys5hxYnmvtet4quHU4ZK2M4qpMKT9SBs7IYGXlboA7MsYoZTxA==}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -3375,7 +3375,7 @@ snapshots:
       '@tanstack/query-core': 5.90.16
       react: 18.3.1
 
-  '@tryghost/admin-api@1.14.3':
+  '@tryghost/admin-api@1.14.4':
     dependencies:
       axios: 1.13.2
       form-data: 4.0.5
