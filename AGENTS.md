@@ -22,6 +22,3 @@
 - Align page content with the navbar container (`max-w-6xl px-6`).
 - Match Contraption styling (Helvetica, rounded buttons, neutral palette).
 - Use `.env` locally only; update `.env.example` when adding variables; production uses injected env vars.
-
-## CI expectations
-- `pnpm install`, `pnpm check`, `pnpm lint`, `pnpm format:check`, `pnpm build`, and Docker build must pass.
