@@ -1,8 +1,10 @@
-ignoredBuiltDependencies:
-  - core-js
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - '@prisma/client'
-  - '@prisma/engines'
-  - prisma
+overrides:
+  form-data@<2.5.4: '>=2.5.4'
+  glob@>=10.2.0 <10.5.0: '>=10.5.0'
+  lodash@<4.17.11: '>=4.17.11'
+  lodash@<4.17.12: '>=4.17.12'
+  lodash@<4.17.21: '>=4.17.21'
+  lodash@<4.17.5: '>=4.17.5'
+  lodash@>=3.7.0 <4.17.19: '>=4.17.19'
+  qs@<6.14.1: '>=6.14.1'
+  tough-cookie@<4.1.3: '>=4.1.3'
