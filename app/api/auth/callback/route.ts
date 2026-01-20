@@ -152,7 +152,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
   const origin = new URL(baseUrl).origin;
-  const shouldSendJunkDrawer = origin === "https://trivet.contraption.co";
+  const shouldSendJunkDrawer = origin === "https://trivet.sredevops.org";
   const code = searchParams.get("code");
   const stateToken = searchParams.get("state");
 
@@ -260,7 +260,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const baseUrl = getPublicBaseUrl(request.headers, request.nextUrl.origin);
   const origin = new URL(baseUrl).origin;
-  const shouldSendJunkDrawer = origin === "https://trivet.contraption.co";
+  const shouldSendJunkDrawer = origin === "https://trivet.sredevops.org";
   try {
     const body = (await request.json()) as {
       credential?: string;

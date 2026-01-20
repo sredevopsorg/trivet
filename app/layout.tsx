@@ -8,7 +8,7 @@ const baseUrl = process.env.TRIVET_PUBLIC_BASE_URL
   ? new URL(process.env.TRIVET_PUBLIC_BASE_URL)
   : new URL("http://localhost:3000");
 const shouldLoadPlausible =
-  baseUrl.origin === "https://trivet.contraption.co";
+  baseUrl.origin === "https://trivet.sredevops.org";
 
 export const metadata: Metadata = {
   metadataBase: baseUrl,
