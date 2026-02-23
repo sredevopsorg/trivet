@@ -1,6 +1,6 @@
 {
   "name": "trivet",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "overrides": {
@@ -56,8 +56,8 @@
     "@types/node": "^20.19.30",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "autoprefixer": "^10.4.23",
     "biome": "0.3.3",
     "eslint": "^8.57.1",
